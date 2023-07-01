@@ -1,0 +1,80 @@
+plugins {
+    id 'com.onesignal.androidsdk.onesignal-gradle-plugin'
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'io.michaelrocks.paranoid'
+}
+
+android {
+    compileSdkVersion 33
+
+    paranoid {
+        enabled true
+        obfuscationSeed 325890738
+    }
+
+    defaultConfig {
+        applicationId "com.adrenaline.ofathlet"
+        minSdkVersion 21
+        targetSdkVersion 33
+        versionCode 1
+        versionName "1.0"
+        setProperty("archivesBaseName", "$applicationId-$versionName")
+    }
+
+    signingConfigs {
+        release {
+            keyAlias "{{keyAlias}}"
+            keyPassword "{{keyPassword}}"
+            storePassword "{{keyPassword}}"
+            storeFile file('./{{keyFileName}}.jks')
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            signingConfig signingConfigs.release
+            proguardFiles(
+                    getDefaultProguardFile("proguard-android-optimize.txt"),
+                    "proguard-rules.pro"
+            )
+        }
+
+        debug {
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles(
+                    getDefaultProguardFile("proguard-android-optimize.txt"),
+                    "proguard-rules.pro"
+            )
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    buildFeatures{
+        viewBinding true
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'com.google.android.material:material:1.4.0'
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.6.10"
+
+    implementation 'com.onesignal:OneSignal:[4.0.0, 4.99.99]'
+
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
+}
