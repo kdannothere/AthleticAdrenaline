@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import io.michaelrocks.paranoid.Obfuscate
 
 // make logic for games
+// make navigation
 // save data
 
 @Obfuscate
