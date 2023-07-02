@@ -4,20 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_port_light"
-    tools:context=".fragments.GameBonusSlotFragment">
+    android:background="@drawable/background_land_dark"
+    tools:context=".fragments.GameSlotFragment">
 
     <ImageView
         android:id="@+id/field_total"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/text_field_gray"
-        app:layout_constraintBottom_toBottomOf="@id/guideline_h25"
-        app:layout_constraintEnd_toEndOf="@id/guideline_v50"
+        android:src="@drawable/text_field_blue"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_h32"
         app:layout_constraintHeight_percent="0.2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintWidth_percent="0.4" />
+        app:layout_constraintEnd_toEndOf="@id/guideline_v70"
+        app:layout_constraintStart_toStartOf="@id/guideline_v50"
+        app:layout_constraintWidth_percent="0.18" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/total_title"
@@ -26,13 +26,12 @@
         android:autoSizeTextType="uniform"
         android:text="@string/total"
         android:textAlignment="center"
-        android:textColor="@color/blue"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/guideline_h15"
-        app:layout_constraintEnd_toEndOf="@id/guideline_v50"
-        app:layout_constraintHeight_percent="0.05"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintWidth_percent="0.45" />
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@id/guideline_h22"
+        app:layout_constraintHeight_percent="0.07"
+        app:layout_constraintEnd_toEndOf="@id/guideline_v70"
+        app:layout_constraintStart_toStartOf="@id/guideline_v50"
+        app:layout_constraintWidth_percent="0.2" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/total_value"
@@ -40,13 +39,12 @@
         android:layout_height="0dp"
         android:autoSizeTextType="uniform"
         android:textAlignment="center"
-        android:textColor="@color/blue"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@id/guideline_v50"
-        app:layout_constraintHeight_percent="0.05"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guideline_h15"
-        app:layout_constraintWidth_percent="0.45"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@id/guideline_v70"
+        app:layout_constraintHeight_percent="0.07"
+        app:layout_constraintStart_toStartOf="@id/guideline_v50"
+        app:layout_constraintTop_toBottomOf="@id/guideline_h22"
+        app:layout_constraintWidth_percent="0.2"
         tools:text="100" />
 
     <ImageView
@@ -54,12 +52,12 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/text_field_gray"
-        app:layout_constraintBottom_toBottomOf="@id/guideline_h25"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/text_field_blue"
+        app:layout_constraintStart_toStartOf="@id/guideline_v70"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_h32"
+        app:layout_constraintEnd_toEndOf="@id/guideline_v95"
         app:layout_constraintHeight_percent="0.2"
-        app:layout_constraintStart_toStartOf="@id/guideline_v50"
-        app:layout_constraintWidth_percent="0.4" />
+        app:layout_constraintWidth_percent="0.18" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/win_title"
@@ -68,13 +66,12 @@
         android:autoSizeTextType="uniform"
         android:text="@string/win"
         android:textAlignment="center"
-        android:textColor="@color/blue"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/guideline_h15"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.05"
-        app:layout_constraintStart_toStartOf="@id/guideline_v50"
-        app:layout_constraintWidth_percent="0.45" />
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@id/guideline_h22"
+        app:layout_constraintEnd_toEndOf="@id/guideline_v95"
+        app:layout_constraintHeight_percent="0.07"
+        app:layout_constraintStart_toStartOf="@id/guideline_v70"
+        app:layout_constraintWidth_percent="0.2" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/win_value"
@@ -82,13 +79,12 @@
         android:layout_height="0dp"
         android:autoSizeTextType="uniform"
         android:textAlignment="center"
-        android:textColor="@color/blue"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.05"
-        app:layout_constraintStart_toStartOf="@id/guideline_v50"
-        app:layout_constraintTop_toBottomOf="@id/guideline_h15"
-        app:layout_constraintWidth_percent="0.45"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@id/guideline_v95"
+        app:layout_constraintHeight_percent="0.07"
+        app:layout_constraintStart_toStartOf="@id/guideline_v70"
+        app:layout_constraintTop_toBottomOf="@id/guideline_h22"
+        app:layout_constraintWidth_percent="0.18"
         tools:text="1000" />
 
     <ImageView
@@ -96,25 +92,25 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/field_slot_gray"
-        app:layout_constraintBottom_toBottomOf="@id/guideline_h65"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.35"
+        android:src="@drawable/field_slot_blue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guideline_v50"
+        app:layout_constraintHeight_percent="0.55"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guideline_h25" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/field_bet"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/text_field_gray"
-        app:layout_constraintBottom_toBottomOf="@id/guideline_h80"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.15"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guideline_h65"
-        app:layout_constraintWidth_percent="0.45" />
+        android:src="@drawable/text_field_blue"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_h65"
+        app:layout_constraintEnd_toEndOf="@id/guideline_v95"
+        app:layout_constraintHeight_percent="0.2"
+        app:layout_constraintStart_toStartOf="@id/guideline_v50"
+        app:layout_constraintTop_toTopOf="@id/guideline_h32"
+        app:layout_constraintWidth_percent="0.25" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/bet_value"
@@ -122,14 +118,13 @@
         android:layout_height="0dp"
         android:autoSizeTextType="uniform"
         android:textAlignment="center"
-        android:textColor="@color/blue"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/guideline_h80"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.07"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guideline_h65"
-        app:layout_constraintWidth_percent="0.45"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_h65"
+        app:layout_constraintEnd_toEndOf="@id/guideline_v95"
+        app:layout_constraintHeight_percent="0.09"
+        app:layout_constraintStart_toStartOf="@id/guideline_v50"
+        app:layout_constraintTop_toTopOf="@id/guideline_h32"
+        app:layout_constraintWidth_percent="0.2"
         tools:text="100" />
 
     <ImageView
@@ -139,13 +134,12 @@
         android:clickable="true"
         android:focusable="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/button_decrease_bet_gray"
-        app:layout_constraintBottom_toBottomOf="@id/guideline_h80"
-        app:layout_constraintEnd_toEndOf="@id/guideline_v30"
-        app:layout_constraintHeight_percent="0.1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guideline_h65"
-        app:layout_constraintWidth_percent="0.2" />
+        android:src="@drawable/button_decrease_bet_blue"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_h65"
+        app:layout_constraintStart_toStartOf="@id/guideline_v50"
+        app:layout_constraintHeight_percent="0.15"
+        app:layout_constraintTop_toTopOf="@id/guideline_h32"
+        app:layout_constraintWidth_percent="0.1" />
 
     <ImageView
         android:id="@+id/button_increase_bet"
@@ -154,13 +148,12 @@
         android:clickable="true"
         android:focusable="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/button_increase_bet_gray"
-        app:layout_constraintBottom_toBottomOf="@id/guideline_h80"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.1"
-        app:layout_constraintStart_toStartOf="@id/guideline_v70"
-        app:layout_constraintTop_toTopOf="@id/guideline_h65"
-        app:layout_constraintWidth_percent="0.2" />
+        android:src="@drawable/button_increase_bet_blue"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_h65"
+        app:layout_constraintEnd_toEndOf="@id/guideline_v95"
+        app:layout_constraintHeight_percent="0.15"
+        app:layout_constraintTop_toTopOf="@id/guideline_h32"
+        app:layout_constraintWidth_percent="0.1" />
 
     <ImageView
         android:id="@+id/button_repeat"
@@ -169,26 +162,27 @@
         android:clickable="true"
         android:focusable="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/button_repeat_gray"
+        android:src="@drawable/button_repeat_blue"
+        app:layout_constraintTop_toTopOf="@id/guideline_h65"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.13"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintWidth_percent="0.25" />
+        app:layout_constraintEnd_toEndOf="@id/guideline_v95"
+        app:layout_constraintHeight_percent="0.2"
+        app:layout_constraintStart_toStartOf="@id/guideline_v50"
+        app:layout_constraintWidth_percent="0.2" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_h15"
+        android:id="@+id/guideline_h22"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.15" />
+        app:layout_constraintGuide_percent="0.22" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_h25"
+        android:id="@+id/guideline_h32"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.25" />
+        app:layout_constraintGuide_percent="0.32" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_h65"
@@ -224,5 +218,12 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.7" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_v95"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.95" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

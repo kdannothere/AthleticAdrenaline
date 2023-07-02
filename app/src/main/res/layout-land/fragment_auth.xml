@@ -26,15 +26,13 @@
         android:id="@+id/box1"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:clickable="true"
         android:scaleType="fitCenter"
+        android:clickable="true"
         android:src="@drawable/box_not_checked"
-        app:layout_constraintBottom_toBottomOf="@id/guideline_h25"
-        app:layout_constraintEnd_toEndOf="@id/guideline_v35"
         app:layout_constraintHeight_percent="0.1"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/guideline_v35"
         app:layout_constraintTop_toTopOf="@id/guideline_h25"
-        app:layout_constraintWidth_percent="0.3"
+        app:layout_constraintWidth_percent="0.1"
         android:focusable="true" />
 
     <ImageView
@@ -45,11 +43,10 @@
         android:clickable="true"
         android:src="@drawable/box_not_checked"
         app:layout_constraintBottom_toBottomOf="@id/guideline_h61"
-        app:layout_constraintEnd_toEndOf="@id/guideline_v35"
+        app:layout_constraintStart_toStartOf="@id/guideline_v35"
         app:layout_constraintHeight_percent="0.1"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/guideline_h25"
-        app:layout_constraintWidth_percent="0.3"
+        app:layout_constraintWidth_percent="0.1"
         android:focusable="true" />
 
     <ImageView
@@ -59,12 +56,10 @@
         android:scaleType="fitCenter"
         android:clickable="true"
         android:src="@drawable/box_not_checked"
-        app:layout_constraintBottom_toBottomOf="@id/guideline_h61"
-        app:layout_constraintEnd_toEndOf="@id/guideline_v35"
+        app:layout_constraintBottom_toTopOf="@id/guideline_h61"
         app:layout_constraintHeight_percent="0.1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guideline_h61"
-        app:layout_constraintWidth_percent="0.3"
+        app:layout_constraintStart_toStartOf="@id/guideline_v35"
+        app:layout_constraintWidth_percent="0.1"
         android:focusable="true" />
 
     <com.google.android.material.textview.MaterialTextView
@@ -74,12 +69,10 @@
         android:text="@string/phone"
         android:textAlignment="viewStart"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@id/guideline_h25"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.08"
-        app:layout_constraintStart_toStartOf="@id/guideline_v35"
+        app:layout_constraintHeight_percent="0.09"
+        app:layout_constraintStart_toStartOf="@id/guideline_v50"
         app:layout_constraintTop_toTopOf="@id/guideline_h25"
-        app:layout_constraintWidth_percent="0.6" />
+        app:layout_constraintWidth_percent="0.25" />
 
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="0dp"
@@ -89,11 +82,10 @@
         android:textAlignment="viewStart"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@id/guideline_h61"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.08"
-        app:layout_constraintStart_toStartOf="@id/guideline_v35"
+        app:layout_constraintHeight_percent="0.09"
+        app:layout_constraintStart_toStartOf="@id/guideline_v50"
         app:layout_constraintTop_toTopOf="@id/guideline_h25"
-        app:layout_constraintWidth_percent="0.6" />
+        app:layout_constraintWidth_percent="0.25" />
 
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="0dp"
@@ -102,12 +94,10 @@
         android:text="@string/anonymous"
         android:textAlignment="viewStart"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@id/guideline_h61"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.08"
-        app:layout_constraintStart_toStartOf="@id/guideline_v35"
-        app:layout_constraintTop_toTopOf="@id/guideline_h61"
-        app:layout_constraintWidth_percent="0.6" />
+        app:layout_constraintBottom_toTopOf="@id/guideline_h61"
+        app:layout_constraintHeight_percent="0.09"
+        app:layout_constraintStart_toStartOf="@id/guideline_v50"
+        app:layout_constraintWidth_percent="0.25" />
 
     <ImageView
         android:id="@+id/button_play"
@@ -122,7 +112,7 @@
         app:layout_constraintHeight_percent="0.21"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/guideline_h61"
-        app:layout_constraintWidth_percent="0.65" />
+        app:layout_constraintWidth_percent="0.4" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/title_play"
@@ -163,10 +153,10 @@
         app:layout_constraintGuide_percent="0.35" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_v65"
+        android:id="@+id/guideline_v50"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.65" />
+        app:layout_constraintGuide_percent="0.45" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

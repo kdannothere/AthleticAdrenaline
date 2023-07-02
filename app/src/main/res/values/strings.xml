@@ -13,4 +13,8 @@
     <string name="bonus_game">Bonus Game</string>
     <string name="total">Total</string>
     <string name="win">Win</string>
+    <string name="sign_up">Sign Up!</string>
+    <string name="phone">Phone</string>
+    <string name="email">Email</string>
+    <string name="anonymous">Anonymous</string>
 </resources>

@@ -4,6 +4,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import io.michaelrocks.paranoid.Obfuscate
 
+// make logic for games
+// save data
+
 @Obfuscate
 class BestActivity : AppCompatActivity() {
 
