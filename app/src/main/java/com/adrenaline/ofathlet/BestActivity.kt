@@ -5,10 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import io.michaelrocks.paranoid.Obfuscate
 
 @Obfuscate
-class AuthActivity : AppCompatActivity() {
+class BestActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_auth)
+        setContentView(R.layout.activity_best)
     }
 }

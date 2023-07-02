@@ -14,7 +14,7 @@
         android:usesCleartextTraffic="true">
 
         <activity
-            android:name=".AuthActivity"
+            android:name=".BestActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".LoadActivity"

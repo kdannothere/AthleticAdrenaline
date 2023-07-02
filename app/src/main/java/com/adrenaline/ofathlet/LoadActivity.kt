@@ -21,8 +21,6 @@ class LoadActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        // TODO начиначем анимацию загрузки, если таковая имеется
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             window.setDecorFitsSystemWindows(false)
         }
@@ -43,7 +41,7 @@ class LoadActivity : AppCompatActivity() {
         ioScope.launch {
             delay(3000) 
             uiScope.launch {
-                startActivity(Intent(this@LoadActivity, AuthActivity::class.java))
+                startActivity(Intent(this@LoadActivity, BestActivity::class.java))
                 finish()
             }
         }
