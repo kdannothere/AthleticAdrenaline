@@ -99,6 +99,42 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/left_recycler_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_h77"
+        app:layout_constraintEnd_toEndOf="@id/guideline_v18"
+        app:layout_constraintStart_toStartOf="@id/guideline_v7"
+        app:layout_constraintTop_toTopOf="@id/guideline_h22"
+        tools:listitem="@layout/slot"
+        tools:itemCount="40"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/center_recycler_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_h77"
+        app:layout_constraintEnd_toEndOf="@id/guideline_v31"
+        app:layout_constraintStart_toStartOf="@id/guideline_v18"
+        app:layout_constraintTop_toTopOf="@id/guideline_h22"
+        tools:listitem="@layout/slot"
+        tools:itemCount="40"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/right_recycler_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_h77"
+        app:layout_constraintEnd_toEndOf="@id/guideline_v43"
+        app:layout_constraintStart_toStartOf="@id/guideline_v31"
+        app:layout_constraintTop_toTopOf="@id/guideline_h22"
+        tools:listitem="@layout/slot"
+        tools:itemCount="40"
+        />
+
     <ImageView
         android:id="@+id/field_bet"
         android:layout_width="0dp"
@@ -175,7 +211,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.22" />
+        app:layout_constraintGuide_percent="0.225" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_h32"
@@ -192,18 +228,39 @@
         app:layout_constraintGuide_percent="0.65" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_h80"
+        android:id="@+id/guideline_h77"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.8" />
+        app:layout_constraintGuide_percent="0.77" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_v30"
+        android:id="@+id/guideline_v7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.3" />
+        app:layout_constraintGuide_percent="0.07" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_v18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.1855" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_v31"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.31" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_v43"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.43" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_v50"
