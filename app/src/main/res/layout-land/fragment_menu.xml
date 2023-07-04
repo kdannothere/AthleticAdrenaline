@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_port_dark2"
-    tools:context=".fragments.MenuFragment">
+    tools:context="presentation.fragments.MenuFragment">
 
     <ImageView
         android:id="@+id/button_back"

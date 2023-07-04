@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_port_light"
-    tools:context=".fragments.GameBonusSlotFragment">
+    tools:context="presentation.fragments.GameBonusFragment">
 
     <ImageView
         android:id="@+id/field_total"

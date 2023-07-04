@@ -13,19 +13,18 @@
         android:id="@+id/slot_field"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:scaleType="fitCenter"
         android:src="@drawable/field_slot_gray"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintDimensionRatio="4:3.35"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.9" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/left_recycler_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="1:2.4"
         app:layout_constraintBottom_toBottomOf="@id/guideline_2_h"
         app:layout_constraintEnd_toEndOf="@id/guideline_2_v"
         app:layout_constraintStart_toStartOf="@id/guideline_1_v"

@@ -1,4 +1,4 @@
-package com.adrenaline.ofathlet.slot
+package com.adrenaline.ofathlet.presentation.slot
 
 class Slot(
     val id: Int,

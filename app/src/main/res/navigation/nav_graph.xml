@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/fragment_game_slot">
+
+    <fragment
+        android:id="@+id/fragment_welcome"
+        android:name="com.adrenaline.ofathlet.presentation.fragments.WelcomeFragment"
+        tools:layout="@layout/fragment_welcome">
+
+        <action
+            android:id="@+id/action_WelcomeFragment_to_AuthFragment"
+            app:popUpTo="@id/fragment_welcome"
+            app:destination="@id/fragment_auth" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_auth"
+        android:name="com.adrenaline.ofathlet.presentation.fragments.AuthFragment"
+        tools:layout="@layout/fragment_auth">
+
+        <action
+            android:id="@+id/action_AuthFragment_to_AuthPhoneFragment"
+            app:popUpTo="@id/fragment_auth"
+            app:destination="@id/fragment_auth_phone" />
+
+        <action
+            android:id="@+id/action_AuthFragment_to_AuthEmailFragment"
+            app:popUpTo="@id/fragment_auth"
+            app:destination="@id/fragment_auth_email" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_auth_phone"
+        android:name="com.adrenaline.ofathlet.presentation.fragments.AuthPhoneFragment"
+        tools:layout="@layout/fragment_auth_phone">
+
+        <action
+            app:popUpTo="@id/fragment_auth_phone"
+            android:id="@+id/action_AuthPhoneFragment_to_MenuFragment"
+            app:destination="@id/fragment_menu" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_auth_email"
+        android:name="com.adrenaline.ofathlet.presentation.fragments.AuthEmailFragment"
+        tools:layout="@layout/fragment_auth_email">
+
+        <action
+            app:popUpTo="@id/fragment_auth_email"
+            android:id="@+id/action_AuthEmailFragment_to_MenuFragment"
+            app:destination="@id/fragment_menu" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_menu"
+        android:name="com.adrenaline.ofathlet.presentation.fragments.MenuFragment"
+        tools:layout="@layout/fragment_menu">
+
+        <action
+            app:popUpTo="@id/fragment_menu"
+            android:id="@+id/action_MenuFragment_to_GameWheelFragment"
+            app:destination="@id/fragment_game_wheel" />
+
+        <action
+            app:popUpTo="@id/fragment_menu"
+            android:id="@+id/action_MenuFragment_to_GameSlotFragment"
+            app:destination="@id/fragment_game_slot" />
+
+        <action
+            app:popUpTo="@id/fragment_menu"
+            android:id="@+id/action_MenuFragment_to_GameBonusFragment"
+            app:destination="@id/fragment_game_bonus" />
+
+        <action
+            app:popUpTo="@id/fragment_menu"
+            android:id="@+id/action_MenuFragment_to_SettingsFragment"
+            app:destination="@id/fragment_settings" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_settings"
+        android:name="com.adrenaline.ofathlet.presentation.fragments.SettingsFragment"
+        tools:layout="@layout/fragment_settings">
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_game_wheel"
+        android:name="com.adrenaline.ofathlet.presentation.fragments.GameWheelFragment"
+        tools:layout="@layout/fragment_game_wheel">
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_game_slot"
+        android:name="com.adrenaline.ofathlet.presentation.fragments.GameSlotFragment"
+        tools:layout="@layout/fragment_game_slot">
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_game_bonus"
+        android:name="com.adrenaline.ofathlet.presentation.fragments.GameBonusFragment"
+        tools:layout="@layout/fragment_game_bonus">
+    </fragment>
+
+</navigation>

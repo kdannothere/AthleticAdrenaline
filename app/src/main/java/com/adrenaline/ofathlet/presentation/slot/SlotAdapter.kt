@@ -1,11 +1,11 @@
-package com.adrenaline.ofathlet.slot
+package com.adrenaline.ofathlet.presentation.slot
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.adrenaline.ofathlet.databinding.SlotBinding
-import com.adrenaline.ofathlet.utilities.ImageUtility
-import com.adrenaline.ofathlet.utilities.ViewUtility
+import com.adrenaline.ofathlet.presentation.utilities.ImageUtility
+import com.adrenaline.ofathlet.presentation.utilities.ViewUtility
 
 class SlotAdapter(private val slotList: List<Slot>) : RecyclerView.Adapter<SlotAdapter.SlotViewHolder>() {
 

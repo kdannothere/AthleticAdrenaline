@@ -1,4 +1,4 @@
-package com.adrenaline.ofathlet.utilities
+package com.adrenaline.ofathlet.presentation.utilities
 
 import android.widget.ImageView
 import kotlinx.coroutines.flow.StateFlow
