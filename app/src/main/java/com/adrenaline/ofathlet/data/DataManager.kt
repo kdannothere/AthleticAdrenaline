@@ -29,6 +29,12 @@ object DataManager {
         }
     }
 
+    suspend fun saveLogin(context: Context, login: String) {
+        context.dataStore.edit { data ->
+            data[Keys.loginKey] = login
+        }
+    }
+
     suspend fun loadBalance(context: Context, currentValue: Int): Int {
         return context.dataStore.data
             .map { preferences ->
@@ -51,6 +57,14 @@ object DataManager {
         return context.dataStore.data
             .map { preferences ->
                 preferences[Keys.betKey] ?: currentValue
+            }
+            .first()
+    }
+
+    suspend fun loadLogin(context: Context): String {
+        return context.dataStore.data
+            .map { preferences ->
+                preferences[Keys.loginKey] ?: ""
             }
             .first()
     }

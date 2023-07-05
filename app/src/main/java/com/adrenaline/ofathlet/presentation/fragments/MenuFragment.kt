@@ -1,5 +1,7 @@
 package com.adrenaline.ofathlet.presentation.fragments
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -35,6 +37,11 @@ class MenuFragment : Fragment() {
 
         binding.buttonSettings.setOnClickListener {
             findNavController().navigate(R.id.action_MenuFragment_to_SettingsFragment)
+        }
+
+        binding.linkPrivacy.setOnClickListener {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/"))
+            startActivity(browserIntent)
         }
 
         return binding.root

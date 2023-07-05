@@ -12,10 +12,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
-// make logic for games
-// make navigation
-// save data
-
 @Obfuscate
 class BestActivity : AppCompatActivity() {
 
@@ -60,6 +56,13 @@ class BestActivity : AppCompatActivity() {
                         )
                     }
                 viewModel.setBet(bet.await(), applicationContext)
+
+                val login =
+                    async(Dispatchers.IO) {
+                        DataManager.loadLogin(applicationContext)
+                    }
+                viewModel.login = login.await()
+                if (login.await().isNotEmpty()) viewModel.isUserAnonymous = false
             }
         }
     }

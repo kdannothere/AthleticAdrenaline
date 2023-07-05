@@ -22,6 +22,45 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.7" />
 
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_h70"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline_h25"
+        app:layout_constraintWidth_percent="0.5"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <com.hbb20.CountryCodePicker
+                    android:id="@+id/country_picker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:ccp_defaultNameCode="UA"
+                    />
+
+                <EditText
+                    android:id="@+id/login_value"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:inputType="phone"
+                    tools:text="9999999999"
+                    android:singleLine="true" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
     <ImageView
         android:id="@+id/button_play"
         android:layout_width="0dp"
@@ -34,7 +73,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.21"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guideline_р70"
+        app:layout_constraintTop_toTopOf="@id/guideline_h70"
         app:layout_constraintWidth_percent="0.65" />
 
     <com.google.android.material.textview.MaterialTextView
@@ -49,7 +88,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.18"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guideline_р70"
+        app:layout_constraintTop_toTopOf="@id/guideline_h70"
         app:layout_constraintWidth_percent="0.35" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -60,7 +99,7 @@
         app:layout_constraintGuide_percent="0.25" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_р70"
+        android:id="@+id/guideline_h70"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

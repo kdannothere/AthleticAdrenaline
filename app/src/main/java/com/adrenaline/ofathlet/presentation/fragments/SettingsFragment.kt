@@ -12,6 +12,7 @@ import com.adrenaline.ofathlet.databinding.FragmentSettingsBinding
 import com.adrenaline.ofathlet.databinding.FragmentWelcomeBinding
 import com.adrenaline.ofathlet.presentation.GameViewModel
 
+
 class SettingsFragment : Fragment() {
 
     private var _binding: FragmentSettingsBinding? = null
@@ -37,7 +38,7 @@ class SettingsFragment : Fragment() {
         }
 
         binding.buttonResetScore.setOnClickListener {
-
+            viewModel.resetScore(requireContext())
         }
 
         binding.buttonBack.setOnClickListener {

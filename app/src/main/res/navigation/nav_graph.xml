@@ -14,6 +14,11 @@
             android:id="@+id/action_WelcomeFragment_to_AuthFragment"
             app:popUpTo="@id/fragment_welcome"
             app:destination="@id/fragment_auth" />
+
+        <action
+            android:id="@+id/action_WelcomeFragment_to_MenuFragment"
+            app:popUpTo="@id/fragment_welcome"
+            app:destination="@id/fragment_menu" />
     </fragment>
 
     <fragment
@@ -30,6 +35,11 @@
             android:id="@+id/action_AuthFragment_to_AuthEmailFragment"
             app:popUpTo="@id/fragment_auth"
             app:destination="@id/fragment_auth_email" />
+
+        <action
+            android:id="@+id/action_AuthFragment_to_MenuFragment"
+            app:popUpTo="@id/fragment_auth"
+            app:destination="@id/fragment_menu" />
     </fragment>
 
     <fragment

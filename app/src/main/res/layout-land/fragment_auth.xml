@@ -55,7 +55,7 @@
         android:layout_height="0dp"
         android:scaleType="fitCenter"
         android:clickable="true"
-        android:src="@drawable/box_not_checked"
+        android:src="@drawable/box_checked"
         app:layout_constraintBottom_toTopOf="@id/guideline_h61"
         app:layout_constraintHeight_percent="0.1"
         app:layout_constraintStart_toStartOf="@id/guideline_v35"

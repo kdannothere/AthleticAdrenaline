@@ -22,6 +22,23 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.7" />
 
+    <EditText
+        android:id="@+id/login_value"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_h70"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/white"
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintWidth_percent="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline_h25"
+        android:textColor="@color/black"
+        android:textAlignment="center"
+        android:inputType="textEmailAddress"
+        tools:text="9999999@gmail.com"
+        android:singleLine="true" />
+
     <ImageView
         android:id="@+id/button_play"
         android:layout_width="0dp"

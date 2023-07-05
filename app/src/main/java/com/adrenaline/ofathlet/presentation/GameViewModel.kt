@@ -27,10 +27,11 @@ class GameViewModel : ViewModel() {
     val centerSlots = mutableListOf<Slot>()
     val rightSlots = mutableListOf<Slot>()
 
-    var isUserAnonymous = false
-
-    var isUserLoggingByEmail = false
-    var isUserLoggingByPhone = false
+    var login = ""
+    val isUserLoggedIn get() = login.isNotEmpty()
+    var isUserAnonymous = true
+    var isLoggingByEmail = false
+    var isLoggingByPhone = false
 
     private val _balance = MutableStateFlow(Constants.balanceDefault)
     val balance = _balance.asStateFlow()
@@ -58,7 +59,10 @@ class GameViewModel : ViewModel() {
         scope.launch(Dispatchers.Main) {
             if (isSpinning) return@launch
             isSpinning = true
-            if (balance.value <= 0) setBalance(Constants.balanceDefault, context) // for infinite credits
+            if (balance.value <= 0) setBalance(
+                Constants.balanceDefault,
+                context
+            ) // for infinite credits
             setBalance(balance.value - bet.value, context)
             generateNewPositions()
             repeat(3) { index ->
@@ -108,7 +112,6 @@ class GameViewModel : ViewModel() {
 
     private fun checkForCombo(
         context: Context,
-        scope: CoroutineScope = viewModelScope,
     ) {
         val leftTopImage = getImageIdById(positions[0], leftSlots)
         val centerTopImage = getImageIdById(positions[1], centerSlots)
@@ -190,6 +193,7 @@ class GameViewModel : ViewModel() {
     fun setBalance(value: Int, context: Context) {
         viewModelScope.launch(Dispatchers.IO) {
             _balance.emit(value)
+            if (isUserAnonymous) return@launch
             DataManager.saveBalance(context, value)
         }
     }
@@ -197,6 +201,7 @@ class GameViewModel : ViewModel() {
     fun setWin(value: Int, context: Context) {
         viewModelScope.launch(Dispatchers.IO) {
             _win.emit(value)
+            if (isUserAnonymous) return@launch
             DataManager.saveWin(context, value)
         }
     }
@@ -204,6 +209,7 @@ class GameViewModel : ViewModel() {
     fun setBet(value: Int, context: Context) {
         viewModelScope.launch(Dispatchers.IO) {
             _bet.emit(value)
+            if (isUserAnonymous) return@launch
             DataManager.saveBet(context, value)
         }
     }
@@ -218,5 +224,19 @@ class GameViewModel : ViewModel() {
         if (bet.value > 1 && !isSpinning) {
             setBet(bet.value - 1, context)
         }
+    }
+
+    fun signIn(context: Context, login: String) {
+        this.login = login
+        isUserAnonymous = false
+        viewModelScope.launch(Dispatchers.IO) {
+            DataManager.saveLogin(context, login)
+        }
+    }
+
+    fun resetScore(context: Context) {
+        setWin(0, context)
+        setBalance(Constants.balanceDefault, context)
+        setBet(Constants.betDefault, context)
     }
 }
