@@ -85,13 +85,13 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences:1.0.0")
 
     // Navigation
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.6.0'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.6.0'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.0'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.5.0'
 
     // Country Code Picker
     implementation 'com.hbb20:ccp:2.7.2'
 
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
 
 
 }
