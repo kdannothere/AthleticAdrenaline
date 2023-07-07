@@ -1,5 +1,6 @@
 package com.adrenaline.ofathlet.presentation.fragments
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.adrenaline.ofathlet.R
 import com.adrenaline.ofathlet.databinding.FragmentAuthBinding
 import com.adrenaline.ofathlet.presentation.GameViewModel
+import com.adrenaline.ofathlet.presentation.utilities.ViewUtility
 
 class AuthFragment : Fragment() {
 
@@ -58,6 +60,16 @@ class AuthFragment : Fragment() {
                     isLoggingByEmail -> findNavController().navigate(R.id.action_AuthFragment_to_AuthEmailFragment)
                     isUserAnonymous -> findNavController().navigate(R.id.action_AuthFragment_to_MenuFragment)
                 }
+            }
+        }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            // fixing auto text feature for older android devices
+            ViewUtility.apply {
+                makeTextAutoSize(binding.textSignUp)
+                makeTextAutoSize(binding.titlePlay)
+                makeTextAutoSize(binding.textPhone)
+                makeTextAutoSize(binding.textEmail)
+                makeTextAutoSize(binding.textAnonymous)
             }
         }
 

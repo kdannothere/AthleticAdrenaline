@@ -1,5 +1,6 @@
 package com.adrenaline.ofathlet.presentation.fragments
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -28,9 +29,6 @@ class GameSlotFragment : Fragment() {
     private lateinit var leftSlotAdapter: SlotAdapter
     private lateinit var centerSlotAdapter: SlotAdapter
     private lateinit var rightSlotAdapter: SlotAdapter
-    private lateinit var leftManager: LinearLayoutManager
-    private lateinit var centerManager: LinearLayoutManager
-    private lateinit var rightManager: LinearLayoutManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,6 +45,16 @@ class GameSlotFragment : Fragment() {
             if (leftSlots.isEmpty()) generateSlots()
             binding.totalValue.text = balance.value.toString()
             binding.betValue.text = bet.value.toString()
+        }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            // fixing auto text feature for older Android APIs
+            ViewUtility.apply {
+                makeTextAutoSize(binding.totalTitle)
+                makeTextAutoSize(binding.winTitle)
+                makeTextAutoSize(binding.winValue)
+                makeTextAutoSize(binding.totalValue)
+                makeTextAutoSize(binding.betValue)
+            }
         }
         return binding.root
     }
@@ -78,24 +86,21 @@ class GameSlotFragment : Fragment() {
     private fun setRecyclerViews() {
 
         leftSlotAdapter = SlotAdapter(viewModel.leftSlots)
-        leftManager = LinearLayoutManager(requireContext())
         centerSlotAdapter = SlotAdapter(viewModel.centerSlots)
-        centerManager = LinearLayoutManager(requireContext())
         rightSlotAdapter = SlotAdapter(viewModel.rightSlots)
-        rightManager = LinearLayoutManager(requireContext())
         binding.leftRecyclerView.apply {
             adapter = leftSlotAdapter
-            layoutManager = leftManager
+            layoutManager = LinearLayoutManager(requireContext())
             setOnTouchListener { _, _ -> true }
         }
         binding.centerRecyclerView.apply {
             adapter = centerSlotAdapter
-            layoutManager = centerManager
+            layoutManager = LinearLayoutManager(requireContext())
             setOnTouchListener { _, _ -> true }
         }
         binding.rightRecyclerView.apply {
             adapter = rightSlotAdapter
-            layoutManager = rightManager
+            layoutManager = LinearLayoutManager(requireContext())
             setOnTouchListener { _, _ -> true }
         }
         setCorrectRecyclerViewHeight(
@@ -124,16 +129,11 @@ class GameSlotFragment : Fragment() {
         binding.apply {
 
             buttonRepeat.setOnClickListener {
-                viewModel.spin(
+                viewModel.spinSlots(
                     listOf(
                         leftRecyclerView,
                         centerRecyclerView,
                         rightRecyclerView
-                    ),
-                    listOf(
-                        leftManager,
-                        centerManager,
-                        rightManager
                     ),
                     requireContext()
                 )

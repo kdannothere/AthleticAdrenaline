@@ -2,9 +2,13 @@ package com.adrenaline.ofathlet.presentation
 
 import android.content.Context
 import android.util.DisplayMetrics
+import android.util.Log
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.Animation
+import android.view.animation.RotateAnimation
+import android.widget.ImageView
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.adrenaline.ofathlet.data.Constants
@@ -45,35 +49,97 @@ class GameViewModel : ViewModel() {
     private val _isHeightCorrect = MutableStateFlow(false)
     val isHeightCorrect = _isHeightCorrect.asStateFlow()
 
-    private var isSpinning = false
+    private var isSpinningSlots = false
     private var latestIndex = 0
     private val random = Random(Date().time)
     private val positions = mutableListOf(0, 0, 0)
 
-    fun spin(
+    private var spinningDuration = 5000L
+    private val sectorsPrizes =
+        intArrayOf(0, 100, 50, 0, 10, 200, 10, 100, 50, 100)
+    private val sectorDegrees = mutableListOf<Int>()
+    // current position of wheel
+    private var degree = 0
+    var isSpinningWheel = false
+
+    init {
+        getDegreeForSectors()
+    }
+
+    fun spinWheel(
+        viewImageWheel: ImageView,
+        context: Context,
+    ) {
+        viewModelScope.launch(Dispatchers.Main) {
+            if (isSpinningWheel) return@launch
+            setBalance(balance.value - bet.value, context)
+            if (balance.value < 0) setBalance(
+                Constants.balanceDefault,
+                context
+            ) // for infinite credits
+            isSpinningWheel = true
+            val currentSector = sectorDegrees.size - (degree + 1)
+            degree = Random.nextInt(sectorsPrizes.size - 1)
+            Log.d("myLog", "degree = $degree")
+            val rotateAnimation = RotateAnimation(
+                sectorDegrees[currentSector].toFloat(),
+                (360 * sectorDegrees.size).toFloat() + sectorDegrees[degree],
+                RotateAnimation.RELATIVE_TO_SELF,
+                0.5f,
+                RotateAnimation.RELATIVE_TO_SELF,
+                0.5f
+            )
+            rotateAnimation.run {
+
+                duration = spinningDuration
+                fillAfter = true
+                interpolator = AccelerateDecelerateInterpolator()
+
+                setAnimationListener(object : Animation.AnimationListener {
+                    override fun onAnimationStart(animation: Animation?) {}
+
+                    override fun onAnimationEnd(animation: Animation?) {
+                        val result: Int = (sectorsPrizes[sectorsPrizes.size - (degree + 1)] * 0.01 * bet.value).toInt()
+                        val isUserWon = result != 0
+
+                        if (isUserWon) {
+                            setBalance(balance.value + result + bet.value, context)
+                            setWin(win.value + result, context)
+                        }
+
+                        isSpinningWheel = false
+                    }
+
+                    override fun onAnimationRepeat(animation: Animation?) {}
+
+                })
+            }
+            viewImageWheel.startAnimation(rotateAnimation)
+        }
+    }
+
+    fun spinSlots(
         recyclers: List<RecyclerView?>,
-        managers: List<LinearLayoutManager>,
         context: Context,
         scope: CoroutineScope = viewModelScope,
     ) {
         scope.launch(Dispatchers.Main) {
-            if (isSpinning) return@launch
-            isSpinning = true
-            if (balance.value <= 0) setBalance(
+            if (isSpinningSlots) return@launch
+            isSpinningSlots = true
+            setBalance(balance.value - bet.value, context)
+            if (balance.value < 0) setBalance(
                 Constants.balanceDefault,
                 context
             ) // for infinite credits
-            setBalance(balance.value - bet.value, context)
             generateNewPositions()
             repeat(3) { index ->
-                scroll(recyclers[index], managers[index], index, context)
+                scroll(recyclers[index], index, context)
             }
         }
     }
 
     private fun scroll(
         recycler: RecyclerView?,
-        manager: LinearLayoutManager,
         index: Int,
         context: Context,
     ) {
@@ -84,12 +150,11 @@ class GameViewModel : ViewModel() {
                 }
 
                 override fun calculateSpeedPerPixel(displayMetrics: DisplayMetrics?): Float {
-                    return (ViewUtility.getFieldHeight() * 0.0002f)
+                    return (ViewUtility.getFieldHeight() * 0.0003f)
                 }
-
             }
             smoothScroller.targetPosition = positions[index]
-            manager.startSmoothScroll(smoothScroller)  // recycler?.layoutManager.startSmoothScroll()
+            recycler?.layoutManager?.startSmoothScroll(smoothScroller)
             if (index == latestIndex) attachListener(recycler, context)
         }
     }
@@ -100,8 +165,8 @@ class GameViewModel : ViewModel() {
                 object : RecyclerView.OnScrollListener() {
                     override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                         if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                            checkForCombo(context)
-                            isSpinning = false
+                            checkSlotsCombo(context)
+                            isSpinningSlots = false
                             recyclerView.removeOnScrollListener(this)
                         }
                     }
@@ -110,7 +175,7 @@ class GameViewModel : ViewModel() {
         }
     }
 
-    private fun checkForCombo(
+    private fun checkSlotsCombo(
         context: Context,
     ) {
         val leftTopImage = getImageIdById(positions[0], leftSlots)
@@ -193,6 +258,7 @@ class GameViewModel : ViewModel() {
     fun setBalance(value: Int, context: Context) {
         viewModelScope.launch(Dispatchers.IO) {
             _balance.emit(value)
+            Log.d("myLog", "set balance = $value")
             if (isUserAnonymous) return@launch
             DataManager.saveBalance(context, value)
         }
@@ -215,13 +281,13 @@ class GameViewModel : ViewModel() {
     }
 
     fun increaseBet(context: Context) {
-        if (bet.value < balance.value && !isSpinning) {
+        if (bet.value < balance.value && !isSpinningSlots) {
             setBet(bet.value + 1, context)
         }
     }
 
     fun decreaseBet(context: Context) {
-        if (bet.value > 1 && !isSpinning) {
+        if (bet.value > 1 && !isSpinningSlots) {
             setBet(bet.value - 1, context)
         }
     }
@@ -239,4 +305,15 @@ class GameViewModel : ViewModel() {
         setBalance(Constants.balanceDefault, context)
         setBet(Constants.betDefault, context)
     }
+
+    private fun getDegreeForSectors() {
+        viewModelScope.launch {
+            val oneSectorDegree = 360 / sectorsPrizes.size
+            repeat(sectorsPrizes.size) {
+                sectorDegrees += (it + 1) * oneSectorDegree
+            }
+        }
+    }
+
+
 }

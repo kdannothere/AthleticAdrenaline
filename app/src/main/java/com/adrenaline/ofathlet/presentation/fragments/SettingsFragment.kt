@@ -1,5 +1,6 @@
 package com.adrenaline.ofathlet.presentation.fragments
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,10 +8,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.adrenaline.ofathlet.R
 import com.adrenaline.ofathlet.databinding.FragmentSettingsBinding
-import com.adrenaline.ofathlet.databinding.FragmentWelcomeBinding
 import com.adrenaline.ofathlet.presentation.GameViewModel
+import com.adrenaline.ofathlet.presentation.utilities.ViewUtility
 
 
 class SettingsFragment : Fragment() {
@@ -37,12 +37,20 @@ class SettingsFragment : Fragment() {
 
         }
 
-        binding.buttonResetScore.setOnClickListener {
+        binding.textButtonResetScore.setOnClickListener {
             viewModel.resetScore(requireContext())
         }
 
         binding.buttonBack.setOnClickListener {
             findNavController().navigateUp()
+        }
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            // fixing auto text feature for older Android APIs
+            ViewUtility.apply {
+                makeTextAutoSize(binding.textVibration)
+                makeTextAutoSize(binding.textButtonResetScore)
+            }
         }
 
         return binding.root

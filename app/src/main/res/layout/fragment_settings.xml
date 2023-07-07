@@ -107,7 +107,7 @@
         app:layout_constraintTop_toTopOf="@id/guideline_h61" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/button_reset_score"
+        android:id="@+id/text_button_reset_score"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:autoSizeTextType="uniform"

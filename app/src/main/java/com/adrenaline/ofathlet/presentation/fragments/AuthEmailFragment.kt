@@ -1,15 +1,13 @@
 package com.adrenaline.ofathlet.presentation.fragments
 
-import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.util.Patterns
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
-import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.adrenaline.ofathlet.R
@@ -43,6 +41,13 @@ class AuthEmailFragment : Fragment() {
                 true
             } else {
                 false
+            }
+        }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            // fixing auto text feature for older android devices
+            ViewUtility.apply {
+                makeTextAutoSize(binding.textSignUp)
+                makeTextAutoSize(binding.titlePlay)
             }
         }
 

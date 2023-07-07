@@ -63,6 +63,7 @@
         android:focusable="true" />
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/text_phone"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:autoSizeTextType="uniform"
@@ -75,6 +76,7 @@
         app:layout_constraintWidth_percent="0.25" />
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/text_email"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:autoSizeTextType="uniform"
@@ -88,6 +90,7 @@
         app:layout_constraintWidth_percent="0.25" />
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/text_anonymous"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:autoSizeTextType="uniform"
@@ -120,8 +123,7 @@
         android:layout_height="0dp"
         android:autoSizeTextType="uniform"
         android:text="@string/play"
-        android:clickable="true"
-        android:textAlignment="center"
+        android:gravity="center_horizontal"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -129,7 +131,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/guideline_h61"
         app:layout_constraintWidth_percent="0.35"
-        android:focusable="true" />
+        />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_h25"
