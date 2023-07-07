@@ -2,7 +2,6 @@ package com.adrenaline.ofathlet.presentation
 
 import android.content.Context
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.Animation
 import android.view.animation.RotateAnimation
@@ -31,7 +30,7 @@ class GameViewModel : ViewModel() {
     val centerSlots = mutableListOf<Slot>()
     val rightSlots = mutableListOf<Slot>()
 
-    var login = ""
+    private var login = ""
     val isUserLoggedIn get() = login.isNotEmpty()
     var isUserAnonymous = true
     var isLoggingByEmail = false
@@ -54,12 +53,14 @@ class GameViewModel : ViewModel() {
     private val random = Random(Date().time)
     private val positions = mutableListOf(0, 0, 0)
 
+
+    // wheel variables
     private var spinningDuration = 5000L
     private val sectorsPrizes =
         intArrayOf(0, 100, 50, 0, 10, 200, 10, 100, 50, 100)
     private val sectorDegrees = mutableListOf<Int>()
     // current position of wheel
-    private var degree = 0
+    private var sectorIndex = 9
     var isSpinningWheel = false
 
     init {
@@ -78,12 +79,12 @@ class GameViewModel : ViewModel() {
                 context
             ) // for infinite credits
             isSpinningWheel = true
-            val currentSector = sectorDegrees.size - (degree + 1)
-            degree = Random.nextInt(sectorsPrizes.size - 1)
-            Log.d("myLog", "degree = $degree")
+            val fromDegrees = sectorDegrees[sectorIndex].toFloat()
+            sectorIndex = Random.nextInt(0, sectorDegrees.size)
+            val toDegrees = (360 * sectorDegrees.size).toFloat() + sectorDegrees[sectorIndex]
             val rotateAnimation = RotateAnimation(
-                sectorDegrees[currentSector].toFloat(),
-                (360 * sectorDegrees.size).toFloat() + sectorDegrees[degree],
+                fromDegrees,
+                toDegrees,
                 RotateAnimation.RELATIVE_TO_SELF,
                 0.5f,
                 RotateAnimation.RELATIVE_TO_SELF,
@@ -99,8 +100,10 @@ class GameViewModel : ViewModel() {
                     override fun onAnimationStart(animation: Animation?) {}
 
                     override fun onAnimationEnd(animation: Animation?) {
-                        val result: Int = (sectorsPrizes[sectorsPrizes.size - (degree + 1)] * 0.01 * bet.value).toInt()
-                        val isUserWon = result != 0
+                        val sectorPrize = sectorsPrizes[sectorsPrizes.size - (sectorIndex + 1)]
+                        val result: Int = (sectorPrize * 0.01 * bet.value).toInt()
+                        val isUserWon = sectorPrize != 0
+                        //Log.d("myLog", "sectorPrize = $sectorPrize")
 
                         if (isUserWon) {
                             setBalance(balance.value + result + bet.value, context)
@@ -258,7 +261,6 @@ class GameViewModel : ViewModel() {
     fun setBalance(value: Int, context: Context) {
         viewModelScope.launch(Dispatchers.IO) {
             _balance.emit(value)
-            Log.d("myLog", "set balance = $value")
             if (isUserAnonymous) return@launch
             DataManager.saveBalance(context, value)
         }
@@ -302,8 +304,6 @@ class GameViewModel : ViewModel() {
 
     fun resetScore(context: Context) {
         setWin(0, context)
-        setBalance(Constants.balanceDefault, context)
-        setBet(Constants.betDefault, context)
     }
 
     private fun getDegreeForSectors() {
