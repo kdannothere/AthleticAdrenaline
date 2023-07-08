@@ -1,16 +1,12 @@
 package com.adrenaline.ofathlet
 
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
-import com.adrenaline.ofathlet.data.DataManager
-import com.adrenaline.ofathlet.presentation.GameViewModel
 import io.michaelrocks.paranoid.Obfuscate
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+
+// make music and sounds
+// make settings
 
 @Obfuscate
 class BestActivity : AppCompatActivity() {

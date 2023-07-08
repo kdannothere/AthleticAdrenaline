@@ -11,6 +11,7 @@
         android:id="@+id/text_sign_up"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:fontFamily="@font/montserrat_bold"
         android:autoSizeTextType="uniform"
         android:text="@string/enter_your_phone"
         android:textAlignment="center"
@@ -30,7 +31,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/guideline_h25"
         app:layout_constraintWidth_percent="0.5"
-        android:background="@color/white">
+        android:background="@drawable/edit_text_background">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -46,6 +47,7 @@
                     android:id="@+id/country_picker"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:ccp_contentColor="@color/white"
                     app:ccp_defaultNameCode="UA"
                     />
 
@@ -53,9 +55,10 @@
                     android:id="@+id/login_value"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:inputType="phone"
                     tools:text="9999999999"
+                    android:fontFamily="@font/montserrat_bold"
                     android:singleLine="true" />
             </LinearLayout>
         </LinearLayout>
@@ -82,11 +85,12 @@
         android:layout_height="0dp"
         android:autoSizeTextType="uniform"
         android:text="@string/play"
+        android:fontFamily="@font/montserrat_bold"
         android:gravity="center_horizontal"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.18"
+        app:layout_constraintHeight_percent="0.16"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/guideline_h70"
         app:layout_constraintWidth_percent="0.35" />

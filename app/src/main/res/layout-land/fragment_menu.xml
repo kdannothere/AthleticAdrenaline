@@ -53,15 +53,16 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:autoSizeTextType="uniform"
+        android:fontFamily="@font/montserrat_bold"
         android:text="@string/lucky_wheel"
-        android:textAlignment="center"
+        android:gravity="center"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@id/guideline_h38"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.08"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/guideline_h15"
-        app:layout_constraintWidth_percent="0.3" />
+        app:layout_constraintWidth_percent="0.18" />
 
     <ImageView
         android:id="@+id/button_game_slot"
@@ -83,8 +84,9 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:autoSizeTextType="uniform"
+        android:fontFamily="@font/montserrat_bold"
         android:text="@string/slots"
-        android:textAlignment="center"
+        android:gravity="center"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@id/guideline_h61"
         app:layout_constraintEnd_toEndOf="parent"
@@ -113,15 +115,16 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:autoSizeTextType="uniform"
+        android:fontFamily="@font/montserrat_bold"
         android:text="@string/bonus_game"
-        android:textAlignment="center"
+        android:gravity="center"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@id/guideline_h84"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.08"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/guideline_h61"
-        app:layout_constraintWidth_percent="0.3" />
+        app:layout_constraintWidth_percent="0.18" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/link_privacy"
@@ -130,6 +133,7 @@
         android:autoSizeTextType="uniform"
         android:clickable="true"
         android:text="@string/privacy"
+        android:fontFamily="@font/montserrat_bold"
         android:textAlignment="center"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"

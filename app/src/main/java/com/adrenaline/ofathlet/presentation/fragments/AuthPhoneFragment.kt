@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -43,6 +44,8 @@ class AuthPhoneFragment : Fragment() {
                 false
             }
         }
+        val typeface = ResourcesCompat.getFont(requireContext(), R.font.montserrat_bold)
+        binding.countryPicker.setTypeFace(typeface)
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             // fixing auto text feature for older android devices
             ViewUtility.apply {
