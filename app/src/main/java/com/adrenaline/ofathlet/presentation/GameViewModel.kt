@@ -2,6 +2,7 @@ package com.adrenaline.ofathlet.presentation
 
 import android.content.Context
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.Animation
 import android.view.animation.RotateAnimation
@@ -47,6 +48,12 @@ class GameViewModel : ViewModel() {
 
     private val _isHeightCorrect = MutableStateFlow(false)
     val isHeightCorrect = _isHeightCorrect.asStateFlow()
+
+    private val _isPlayingSoundWin = MutableStateFlow(false)
+    val isPlayingSoundWin = _isPlayingSoundWin.asStateFlow()
+
+    private val _isPlayingSoundLose = MutableStateFlow(false)
+    val isPlayingSoundLose = _isPlayingSoundWin.asStateFlow()
 
     private var isSpinningSlots = false
     private var latestIndex = 0
@@ -103,12 +110,12 @@ class GameViewModel : ViewModel() {
                         val sectorPrize = sectorsPrizes[sectorsPrizes.size - (sectorIndex + 1)]
                         val result: Int = (sectorPrize * 0.01 * bet.value).toInt()
                         val isUserWon = sectorPrize != 0
-                        //Log.d("myLog", "sectorPrize = $sectorPrize")
 
                         if (isUserWon) {
+                            setIsPlayingSoundWin(true)
                             setBalance(balance.value + result + bet.value, context)
                             setWin(win.value + result, context)
-                        }
+                        } else setIsPlayingSoundLose(true)
 
                         isSpinningWheel = false
                     }
@@ -202,9 +209,10 @@ class GameViewModel : ViewModel() {
             creditsWon += bet.value * 10
         }
         if (creditsWon > 0) {
+            setIsPlayingSoundWin(true)
             setBalance(balance.value + creditsWon, context)
             setWin(win.value + creditsWon, context)
-        }
+        } else setIsPlayingSoundLose(true)
     }
 
     fun generateSlots(amount: Int = 50) {
@@ -271,6 +279,20 @@ class GameViewModel : ViewModel() {
             _win.emit(value)
             if (isUserAnonymous) return@launch
             DataManager.saveWin(context, value)
+        }
+    }
+
+    fun setIsPlayingSoundWin(value: Boolean) {
+        viewModelScope.launch(Dispatchers.IO) {
+            _isPlayingSoundWin.emit(value)
+            Log.d("myLog", "setIsPlayingSoundWin - $value")
+        }
+    }
+
+    fun setIsPlayingSoundLose(value: Boolean) {
+        viewModelScope.launch(Dispatchers.IO) {
+            _isPlayingSoundLose.emit(value)
+            Log.d("myLog", "setIsPlayingSoundLose - $value")
         }
     }
 

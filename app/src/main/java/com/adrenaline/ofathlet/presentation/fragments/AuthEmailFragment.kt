@@ -9,10 +9,13 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.adrenaline.ofathlet.BestActivity
 import com.adrenaline.ofathlet.R
 import com.adrenaline.ofathlet.databinding.FragmentAuthEmailBinding
 import com.adrenaline.ofathlet.presentation.GameViewModel
+import com.adrenaline.ofathlet.presentation.utilities.MusicUtility
 import com.adrenaline.ofathlet.presentation.utilities.ViewUtility
 
 class AuthEmailFragment : Fragment() {
@@ -28,6 +31,7 @@ class AuthEmailFragment : Fragment() {
         _binding = FragmentAuthEmailBinding.inflate(inflater, container, false)
 
         binding.buttonPlay.setOnClickListener {
+            playClickSound()
             signIn()
             if (viewModel.isUserLoggedIn) {
                 findNavController().navigate(R.id.action_AuthEmailFragment_to_MenuFragment)
@@ -58,5 +62,14 @@ class AuthEmailFragment : Fragment() {
         val isEmailAddress = Patterns.EMAIL_ADDRESS.matcher(email).matches()
         if (!isEmailAddress) return
         viewModel.signIn(requireContext(), email)
+    }
+
+    private fun playClickSound() {
+        MusicUtility.playSound(
+            mediaPlayer = (activity as BestActivity).soundPlayer,
+            MusicUtility.soundClickResId,
+            requireContext(),
+            lifecycleScope
+        )
     }
 }

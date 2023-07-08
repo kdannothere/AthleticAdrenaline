@@ -2,15 +2,18 @@ package com.adrenaline.ofathlet.presentation.fragments
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import com.adrenaline.ofathlet.BestActivity
 import com.adrenaline.ofathlet.data.DataManager
 import com.adrenaline.ofathlet.databinding.FragmentGameWheelBinding
 import com.adrenaline.ofathlet.presentation.GameViewModel
+import com.adrenaline.ofathlet.presentation.utilities.MusicUtility
 import com.adrenaline.ofathlet.presentation.utilities.ViewUtility
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.launchIn
@@ -43,6 +46,20 @@ class GameWheelFragment : Fragment() {
             binding.betValue.text = newValue.toString()
         }.launchIn(lifecycleScope)
 
+        viewModel.isPlayingSoundWin.onEach { newValue ->
+            if(newValue) {
+                playWinSound()
+                viewModel.setIsPlayingSoundWin(false)
+            }
+        }.launchIn(lifecycleScope)
+
+        viewModel.isPlayingSoundLose.onEach { newValue ->
+            if(newValue) {
+                playLoseSound()
+                viewModel.setIsPlayingSoundLose(false)
+            }
+        }.launchIn(lifecycleScope)
+
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             // fixing auto text feature for older Android APIs
             ViewUtility.apply {
@@ -62,10 +79,12 @@ class GameWheelFragment : Fragment() {
         binding.apply {
 
             buttonRepeat.setOnClickListener {
+                playClickSound()
                 viewModel.spinWheel(binding.wheel, requireContext())
             }
 
             buttonIncreaseBet.setOnClickListener {
+                playClickSound()
                 viewModel.increaseBet(requireContext())
                 lifecycleScope.launch(Dispatchers.IO) {
                     DataManager.saveBet(
@@ -76,6 +95,7 @@ class GameWheelFragment : Fragment() {
             }
 
             buttonDecreaseBet.setOnClickListener {
+                playClickSound()
                 viewModel.decreaseBet(requireContext())
                 lifecycleScope.launch(Dispatchers.IO) {
                     DataManager.saveBet(
@@ -85,5 +105,32 @@ class GameWheelFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun playClickSound() {
+        MusicUtility.playSound(
+            mediaPlayer = (activity as BestActivity).soundPlayer,
+            MusicUtility.soundClickResId,
+            requireContext(),
+            lifecycleScope
+        )
+    }
+
+    private fun playWinSound() {
+        MusicUtility.playSound(
+            mediaPlayer = (activity as BestActivity).soundPlayer,
+            MusicUtility.soundWinResId,
+            requireContext(),
+            lifecycleScope
+        )
+    }
+
+    private fun playLoseSound() {
+        MusicUtility.playSound(
+            mediaPlayer = (activity as BestActivity).soundPlayer,
+            MusicUtility.soundLoseResId,
+            requireContext(),
+            lifecycleScope
+        )
     }
 }

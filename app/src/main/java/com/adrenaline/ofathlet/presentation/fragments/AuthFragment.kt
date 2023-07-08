@@ -7,10 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.adrenaline.ofathlet.BestActivity
 import com.adrenaline.ofathlet.R
 import com.adrenaline.ofathlet.databinding.FragmentAuthBinding
 import com.adrenaline.ofathlet.presentation.GameViewModel
+import com.adrenaline.ofathlet.presentation.utilities.MusicUtility
 import com.adrenaline.ofathlet.presentation.utilities.ViewUtility
 
 class AuthFragment : Fragment() {
@@ -27,6 +30,7 @@ class AuthFragment : Fragment() {
         updateBoxes()
 
         binding.box1.setOnClickListener {
+            playClickSound()
             viewModel.apply {
                 isLoggingByPhone = true
                 isLoggingByEmail = false
@@ -36,6 +40,7 @@ class AuthFragment : Fragment() {
         }
 
         binding.box2.setOnClickListener {
+            playClickSound()
             viewModel.apply {
                 isLoggingByPhone = false
                 isLoggingByEmail = true
@@ -45,6 +50,7 @@ class AuthFragment : Fragment() {
         }
 
         binding.box3.setOnClickListener {
+            playClickSound()
             viewModel.apply {
                 isLoggingByPhone = false
                 isLoggingByEmail = false
@@ -54,6 +60,7 @@ class AuthFragment : Fragment() {
         }
 
         binding.buttonPlay.setOnClickListener {
+            playClickSound()
             viewModel.apply {
                 when {
                     isLoggingByPhone -> findNavController().navigate(R.id.action_AuthFragment_to_AuthPhoneFragment)
@@ -96,5 +103,14 @@ class AuthFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun playClickSound() {
+        MusicUtility.playSound(
+            mediaPlayer = (activity as BestActivity).soundPlayer,
+            MusicUtility.soundClickResId,
+            requireContext(),
+            lifecycleScope
+        )
     }
 }

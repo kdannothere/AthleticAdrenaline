@@ -7,9 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.adrenaline.ofathlet.BestActivity
 import com.adrenaline.ofathlet.databinding.FragmentSettingsBinding
 import com.adrenaline.ofathlet.presentation.GameViewModel
+import com.adrenaline.ofathlet.presentation.utilities.MusicUtility
 import com.adrenaline.ofathlet.presentation.utilities.ViewUtility
 
 
@@ -26,22 +29,24 @@ class SettingsFragment : Fragment() {
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
 
         binding.buttonMusic.setOnClickListener {
-
+            playClickSound()
         }
 
         binding.buttonSound.setOnClickListener {
-
+            playClickSound()
         }
 
         binding.switchVibration.setOnClickListener {
-
+            playClickSound()
         }
 
         binding.textButtonResetScore.setOnClickListener {
+            playClickSound()
             viewModel.resetScore(requireContext())
         }
 
         binding.buttonBack.setOnClickListener {
+            playClickSound()
             findNavController().navigateUp()
         }
 
@@ -54,5 +59,14 @@ class SettingsFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    private fun playClickSound() {
+        MusicUtility.playSound(
+            mediaPlayer = (activity as BestActivity).soundPlayer,
+            MusicUtility.soundClickResId,
+            requireContext(),
+            lifecycleScope
+        )
     }
 }

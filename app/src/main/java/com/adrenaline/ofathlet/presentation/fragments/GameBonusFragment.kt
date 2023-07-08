@@ -10,10 +10,12 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.adrenaline.ofathlet.BestActivity
 import com.adrenaline.ofathlet.data.DataManager
 import com.adrenaline.ofathlet.databinding.FragmentGameBonusBinding
 import com.adrenaline.ofathlet.presentation.GameViewModel
 import com.adrenaline.ofathlet.presentation.slot.SlotAdapter
+import com.adrenaline.ofathlet.presentation.utilities.MusicUtility
 import com.adrenaline.ofathlet.presentation.utilities.ViewUtility
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -81,6 +83,20 @@ class GameBonusFragment : Fragment() {
         viewModel.bet.onEach { newValue ->
             binding.betValue.text = newValue.toString()
         }.launchIn(lifecycleScope)
+
+        viewModel.isPlayingSoundWin.onEach { newValue ->
+            if(newValue) {
+                playWinSound()
+                viewModel.setIsPlayingSoundWin(false)
+            }
+        }.launchIn(lifecycleScope)
+
+        viewModel.isPlayingSoundLose.onEach { newValue ->
+            if(newValue) {
+                playLoseSound()
+                viewModel.setIsPlayingSoundLose(false)
+            }
+        }.launchIn(lifecycleScope)
     }
 
     private fun setRecyclerViews() {
@@ -129,6 +145,7 @@ class GameBonusFragment : Fragment() {
         binding.apply {
 
             buttonRepeat.setOnClickListener {
+                playClickSound()
                 viewModel.spinSlots(
                     listOf(
                         leftRecyclerView,
@@ -140,6 +157,7 @@ class GameBonusFragment : Fragment() {
             }
 
             buttonIncreaseBet.setOnClickListener {
+                playClickSound()
                 viewModel.increaseBet(requireContext())
                 lifecycleScope.launch(Dispatchers.IO) {
                     DataManager.saveBet(
@@ -150,6 +168,7 @@ class GameBonusFragment : Fragment() {
             }
 
             buttonDecreaseBet.setOnClickListener {
+                playClickSound()
                 viewModel.decreaseBet(requireContext())
                 lifecycleScope.launch(Dispatchers.IO) {
                     DataManager.saveBet(
@@ -171,5 +190,32 @@ class GameBonusFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    private fun playClickSound() {
+        MusicUtility.playSound(
+            mediaPlayer = (activity as BestActivity).soundPlayer,
+            MusicUtility.soundClickResId,
+            requireContext(),
+            lifecycleScope
+        )
+    }
+
+    private fun playWinSound() {
+        MusicUtility.playSound(
+            mediaPlayer = (activity as BestActivity).soundPlayer,
+            MusicUtility.soundWinResId,
+            requireContext(),
+            lifecycleScope
+        )
+    }
+
+    private fun playLoseSound() {
+        MusicUtility.playSound(
+            mediaPlayer = (activity as BestActivity).soundPlayer,
+            MusicUtility.soundLoseResId,
+            requireContext(),
+            lifecycleScope
+        )
     }
 }

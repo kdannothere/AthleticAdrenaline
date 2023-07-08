@@ -35,6 +35,24 @@ object DataManager {
         }
     }
 
+    suspend fun saveMusicSetting(context: Context, isMusicOn: Boolean) {
+        context.dataStore.edit { data ->
+            data[Keys.musicSettingKey] = isMusicOn
+        }
+    }
+
+    suspend fun saveSoundSetting(context: Context, isSoundOn: Boolean) {
+        context.dataStore.edit { data ->
+            data[Keys.soundSettingKey] = isSoundOn
+        }
+    }
+
+    suspend fun saveVibrationSetting(context: Context, isVibrationOn: Boolean) {
+        context.dataStore.edit { data ->
+            data[Keys.vibrationSettingKey] = isVibrationOn
+        }
+    }
+
     suspend fun loadBalance(context: Context, currentValue: Int): Int {
         return context.dataStore.data
             .map { preferences ->
@@ -65,6 +83,30 @@ object DataManager {
         return context.dataStore.data
             .map { preferences ->
                 preferences[Keys.loginKey] ?: ""
+            }
+            .first()
+    }
+
+    suspend fun loadMusicSetting(context: Context): Boolean {
+        return context.dataStore.data
+            .map { preferences ->
+                preferences[Keys.musicSettingKey] ?: true
+            }
+            .first()
+    }
+
+    suspend fun loadSoundSetting(context: Context): Boolean {
+        return context.dataStore.data
+            .map { preferences ->
+                preferences[Keys.soundSettingKey] ?: true
+            }
+            .first()
+    }
+
+    suspend fun loadVibrationSetting(context: Context): Boolean {
+        return context.dataStore.data
+            .map { preferences ->
+                preferences[Keys.vibrationSettingKey] ?: true
             }
             .first()
     }

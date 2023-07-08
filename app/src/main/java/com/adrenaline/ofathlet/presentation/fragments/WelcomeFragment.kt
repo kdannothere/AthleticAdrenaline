@@ -9,10 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.adrenaline.ofathlet.BestActivity
 import com.adrenaline.ofathlet.R
 import com.adrenaline.ofathlet.data.DataManager
 import com.adrenaline.ofathlet.databinding.FragmentWelcomeBinding
 import com.adrenaline.ofathlet.presentation.GameViewModel
+import com.adrenaline.ofathlet.presentation.utilities.MusicUtility
 import com.adrenaline.ofathlet.presentation.utilities.ViewUtility
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -31,7 +33,8 @@ class WelcomeFragment : Fragment() {
         _binding = FragmentWelcomeBinding.inflate(inflater, container, false)
 
         binding.buttonPlay.setOnClickListener {
-            lifecycleScope.launch {
+            lifecycleScope.launch(Dispatchers.IO) {
+                playClickSound()
                 val login =
                     async(Dispatchers.IO) {
                         DataManager.loadLogin(requireContext())
@@ -42,7 +45,11 @@ class WelcomeFragment : Fragment() {
                         loadData()
                         findNavController().navigate(R.id.action_WelcomeFragment_to_MenuFragment)
                     }
-                } else findNavController().navigate(R.id.action_WelcomeFragment_to_AuthFragment)
+                } else {
+                    launch(Dispatchers.Main) {
+                        findNavController().navigate(R.id.action_WelcomeFragment_to_AuthFragment)
+                    }
+                }
             }
         }
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
@@ -87,5 +94,14 @@ class WelcomeFragment : Fragment() {
                 viewModel.setBet(bet.await(), requireContext())
             }
         }
+    }
+
+    private fun playClickSound() {
+        MusicUtility.playSound(
+            mediaPlayer = (activity as BestActivity).soundPlayer,
+            MusicUtility.soundClickResId,
+            requireContext(),
+            lifecycleScope
+        )
     }
 }

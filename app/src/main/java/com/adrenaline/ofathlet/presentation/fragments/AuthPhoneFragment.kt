@@ -10,10 +10,13 @@ import android.view.inputmethod.EditorInfo
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.adrenaline.ofathlet.BestActivity
 import com.adrenaline.ofathlet.R
 import com.adrenaline.ofathlet.databinding.FragmentAuthPhoneBinding
 import com.adrenaline.ofathlet.presentation.GameViewModel
+import com.adrenaline.ofathlet.presentation.utilities.MusicUtility
 import com.adrenaline.ofathlet.presentation.utilities.ViewUtility
 
 class AuthPhoneFragment : Fragment() {
@@ -29,6 +32,7 @@ class AuthPhoneFragment : Fragment() {
         _binding = FragmentAuthPhoneBinding.inflate(inflater, container, false)
 
         binding.buttonPlay.setOnClickListener {
+            playClickSound()
             signIn()
             if (viewModel.isUserLoggedIn) {
                 findNavController().navigate(R.id.action_AuthPhoneFragment_to_MenuFragment)
@@ -63,5 +67,14 @@ class AuthPhoneFragment : Fragment() {
         if (!isPhoneNumber) return
         viewModel.signIn(requireContext(), phone)
         binding.buttonPlay.callOnClick()
+    }
+
+    private fun playClickSound() {
+        MusicUtility.playSound(
+            mediaPlayer = (activity as BestActivity).soundPlayer,
+            MusicUtility.soundClickResId,
+            requireContext(),
+            lifecycleScope
+        )
     }
 }
