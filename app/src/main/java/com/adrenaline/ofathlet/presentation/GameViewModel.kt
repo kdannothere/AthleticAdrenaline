@@ -2,7 +2,6 @@ package com.adrenaline.ofathlet.presentation
 
 import android.content.Context
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.Animation
 import android.view.animation.RotateAnimation
@@ -18,6 +17,7 @@ import com.adrenaline.ofathlet.presentation.utilities.ImageUtility
 import com.adrenaline.ofathlet.presentation.utilities.ViewUtility
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -32,6 +32,9 @@ class GameViewModel : ViewModel() {
     val rightSlots = mutableListOf<Slot>()
 
     private var login = ""
+    var isMusicOn = true
+    var isSoundOn = true
+    var isVibrationOn = true
     val isUserLoggedIn get() = login.isNotEmpty()
     var isUserAnonymous = true
     var isLoggingByEmail = false
@@ -53,7 +56,7 @@ class GameViewModel : ViewModel() {
     val isPlayingSoundWin = _isPlayingSoundWin.asStateFlow()
 
     private val _isPlayingSoundLose = MutableStateFlow(false)
-    val isPlayingSoundLose = _isPlayingSoundWin.asStateFlow()
+    val isPlayingSoundLose = _isPlayingSoundLose.asStateFlow()
 
     private var isSpinningSlots = false
     private var latestIndex = 0
@@ -87,7 +90,7 @@ class GameViewModel : ViewModel() {
             ) // for infinite credits
             isSpinningWheel = true
             val fromDegrees = sectorDegrees[sectorIndex].toFloat()
-            sectorIndex = Random.nextInt(0, sectorDegrees.size)
+            sectorIndex = random.nextInt(0, sectorDegrees.size)
             val toDegrees = (360 * sectorDegrees.size).toFloat() + sectorDegrees[sectorIndex]
             val rotateAnimation = RotateAnimation(
                 fromDegrees,
@@ -285,14 +288,12 @@ class GameViewModel : ViewModel() {
     fun setIsPlayingSoundWin(value: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
             _isPlayingSoundWin.emit(value)
-            Log.d("myLog", "setIsPlayingSoundWin - $value")
         }
     }
 
     fun setIsPlayingSoundLose(value: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
             _isPlayingSoundLose.emit(value)
-            Log.d("myLog", "setIsPlayingSoundLose - $value")
         }
     }
 
@@ -337,5 +338,14 @@ class GameViewModel : ViewModel() {
         }
     }
 
-
+    fun loadSettings(context: Context) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val isMusicOn = async { DataManager.loadMusicSetting(context) }
+            val isSoundOn = async { DataManager.loadSoundSetting(context) }
+            val isVibrationOn = async { DataManager.loadVibrationSetting(context) }
+            this@GameViewModel.isMusicOn = isMusicOn.await()
+            this@GameViewModel.isSoundOn = isSoundOn.await()
+            this@GameViewModel.isVibrationOn = isVibrationOn.await()
+        }
+    }
 }

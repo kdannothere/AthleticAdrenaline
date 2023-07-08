@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.adrenaline.ofathlet.BestActivity
 import com.adrenaline.ofathlet.R
@@ -60,7 +60,14 @@ class AuthEmailFragment : Fragment() {
 
     private fun signIn(email: String = binding.loginValue.text.toString()) {
         val isEmailAddress = Patterns.EMAIL_ADDRESS.matcher(email).matches()
-        if (!isEmailAddress) return
+        if (!isEmailAddress) {
+            MusicUtility.doVibrate(
+                requireContext(),
+                viewModel.viewModelScope,
+                viewModel.isVibrationOn
+            )
+            return
+        }
         viewModel.signIn(requireContext(), email)
     }
 
@@ -69,7 +76,9 @@ class AuthEmailFragment : Fragment() {
             mediaPlayer = (activity as BestActivity).soundPlayer,
             MusicUtility.soundClickResId,
             requireContext(),
-            lifecycleScope
+            viewModel.viewModelScope,
+            viewModel.isSoundOn,
+            viewModel.isVibrationOn
         )
     }
 }

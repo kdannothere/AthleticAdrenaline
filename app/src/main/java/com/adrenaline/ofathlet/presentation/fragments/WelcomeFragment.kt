@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.adrenaline.ofathlet.BestActivity
 import com.adrenaline.ofathlet.R
@@ -35,6 +36,7 @@ class WelcomeFragment : Fragment() {
         binding.buttonPlay.setOnClickListener {
             lifecycleScope.launch(Dispatchers.IO) {
                 playClickSound()
+                viewModel.loadSettings(requireContext())
                 val login =
                     async(Dispatchers.IO) {
                         DataManager.loadLogin(requireContext())
@@ -97,11 +99,16 @@ class WelcomeFragment : Fragment() {
     }
 
     private fun playClickSound() {
-        MusicUtility.playSound(
-            mediaPlayer = (activity as BestActivity).soundPlayer,
-            MusicUtility.soundClickResId,
-            requireContext(),
-            lifecycleScope
-        )
+        viewModel.viewModelScope.launch {
+            val isSoundOn = async { DataManager.loadSoundSetting(requireContext()) }
+            MusicUtility.playSound(
+                mediaPlayer = (activity as BestActivity).soundPlayer,
+                MusicUtility.soundClickResId,
+                requireContext(),
+                this,
+                isSoundOn.await(),
+                viewModel.isVibrationOn
+            )
+        }
     }
 }

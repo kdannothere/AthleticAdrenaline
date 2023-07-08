@@ -8,13 +8,10 @@ import androidx.navigation.Navigation
 import com.adrenaline.ofathlet.presentation.utilities.MusicUtility
 import io.michaelrocks.paranoid.Obfuscate
 
-// make music and sounds
-// make settings
-
 @Obfuscate
 class BestActivity : AppCompatActivity() {
 
-    private val musicPlayer: MediaPlayer by lazy {
+    val musicPlayer: MediaPlayer by lazy {
         MediaPlayer.create(this, MusicUtility.musicResId)
     }
     val soundPlayer: MediaPlayer by lazy {

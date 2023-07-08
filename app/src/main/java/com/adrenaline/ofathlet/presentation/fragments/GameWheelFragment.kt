@@ -2,13 +2,13 @@ package com.adrenaline.ofathlet.presentation.fragments
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import com.adrenaline.ofathlet.BestActivity
 import com.adrenaline.ofathlet.data.DataManager
 import com.adrenaline.ofathlet.databinding.FragmentGameWheelBinding
@@ -112,7 +112,9 @@ class GameWheelFragment : Fragment() {
             mediaPlayer = (activity as BestActivity).soundPlayer,
             MusicUtility.soundClickResId,
             requireContext(),
-            lifecycleScope
+            viewModel.viewModelScope,
+            viewModel.isSoundOn,
+            viewModel.isVibrationOn
         )
     }
 
@@ -121,7 +123,9 @@ class GameWheelFragment : Fragment() {
             mediaPlayer = (activity as BestActivity).soundPlayer,
             MusicUtility.soundWinResId,
             requireContext(),
-            lifecycleScope
+            viewModel.viewModelScope,
+            viewModel.isSoundOn,
+            viewModel.isVibrationOn
         )
     }
 
@@ -130,7 +134,9 @@ class GameWheelFragment : Fragment() {
             mediaPlayer = (activity as BestActivity).soundPlayer,
             MusicUtility.soundLoseResId,
             requireContext(),
-            lifecycleScope
+            viewModel.viewModelScope,
+            viewModel.isSoundOn,
+            viewModel.isVibrationOn
         )
     }
 }

@@ -7,13 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.adrenaline.ofathlet.BestActivity
+import com.adrenaline.ofathlet.R
+import com.adrenaline.ofathlet.data.DataManager
 import com.adrenaline.ofathlet.databinding.FragmentSettingsBinding
 import com.adrenaline.ofathlet.presentation.GameViewModel
 import com.adrenaline.ofathlet.presentation.utilities.MusicUtility
 import com.adrenaline.ofathlet.presentation.utilities.ViewUtility
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class SettingsFragment : Fragment() {
@@ -27,17 +32,29 @@ class SettingsFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
+        setupSettings()
 
         binding.buttonMusic.setOnClickListener {
             playClickSound()
+            changeMusicSetting()
+        }
+
+        binding.volumeMusic.setOnClickListener {
+            binding.buttonMusic.callOnClick()
         }
 
         binding.buttonSound.setOnClickListener {
             playClickSound()
+            changeSoundSetting()
+        }
+
+        binding.volumeSound.setOnClickListener {
+            binding.buttonSound.callOnClick()
         }
 
         binding.switchVibration.setOnClickListener {
             playClickSound()
+            changeVibrationSetting()
         }
 
         binding.textButtonResetScore.setOnClickListener {
@@ -61,12 +78,83 @@ class SettingsFragment : Fragment() {
         return binding.root
     }
 
+    private fun changeMusicSetting() {
+        viewModel.viewModelScope.launch(Dispatchers.IO) {
+            if (viewModel.isMusicOn) {
+                DataManager.saveMusicSetting(requireContext(), false)
+                MusicUtility.pauseMusic(
+                    (activity as BestActivity).musicPlayer,
+                    this
+                )
+                viewModel.isMusicOn = false
+            } else {
+                DataManager.saveMusicSetting(requireContext(), true)
+                MusicUtility.playMusic(
+                    (activity as BestActivity).musicPlayer,
+                    requireContext(),
+                    this
+                )
+                viewModel.isMusicOn = true
+            }
+            setupSettings()
+        }
+    }
+
+    private fun changeSoundSetting() {
+        viewModel.viewModelScope.launch(Dispatchers.IO) {
+            if (viewModel.isSoundOn) {
+                DataManager.saveSoundSetting(requireContext(), false)
+                viewModel.isSoundOn = false
+            } else {
+                DataManager.saveSoundSetting(requireContext(), true)
+                viewModel.isSoundOn = true
+            }
+            setupSettings()
+        }
+    }
+
+    private fun changeVibrationSetting() {
+        viewModel.viewModelScope.launch(Dispatchers.IO) {
+            if (viewModel.isVibrationOn) {
+                DataManager.saveVibrationSetting(requireContext(), false)
+                viewModel.isVibrationOn = false
+            } else {
+                DataManager.saveVibrationSetting(requireContext(), true)
+                viewModel.isVibrationOn = true
+            }
+            setupSettings()
+        }
+    }
+
+    private fun setupSettings() {
+        viewModel.viewModelScope.launch(Dispatchers.IO) {
+            withContext(Dispatchers.Main) {
+                // set music
+                if (viewModel.isMusicOn) {
+                    binding.volumeMusic.setImageResource(R.drawable.volume_max)
+                } else {
+                    binding.volumeMusic.setImageResource(R.drawable.volume_min)
+                }
+                // set sound
+                if (viewModel.isSoundOn) {
+                    binding.volumeSound.setImageResource(R.drawable.volume_max)
+                } else {
+                    binding.volumeSound.setImageResource(R.drawable.volume_min)
+                }
+                // set vibration
+                binding.switchVibration.isChecked = viewModel.isVibrationOn
+            }
+        }
+    }
+
     private fun playClickSound() {
         MusicUtility.playSound(
             mediaPlayer = (activity as BestActivity).soundPlayer,
             MusicUtility.soundClickResId,
             requireContext(),
-            lifecycleScope
+            viewModel.viewModelScope,
+            viewModel.isSoundOn,
+            viewModel.isVibrationOn
         )
     }
 }

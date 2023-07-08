@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.adrenaline.ofathlet.BestActivity
@@ -197,7 +198,9 @@ class GameBonusFragment : Fragment() {
             mediaPlayer = (activity as BestActivity).soundPlayer,
             MusicUtility.soundClickResId,
             requireContext(),
-            lifecycleScope
+            viewModel.viewModelScope,
+            viewModel.isSoundOn,
+            viewModel.isVibrationOn
         )
     }
 
@@ -206,7 +209,9 @@ class GameBonusFragment : Fragment() {
             mediaPlayer = (activity as BestActivity).soundPlayer,
             MusicUtility.soundWinResId,
             requireContext(),
-            lifecycleScope
+            viewModel.viewModelScope,
+            viewModel.isSoundOn,
+            viewModel.isVibrationOn
         )
     }
 
@@ -215,7 +220,9 @@ class GameBonusFragment : Fragment() {
             mediaPlayer = (activity as BestActivity).soundPlayer,
             MusicUtility.soundLoseResId,
             requireContext(),
-            lifecycleScope
+            viewModel.viewModelScope,
+            viewModel.isSoundOn,
+            viewModel.isVibrationOn
         )
     }
 }

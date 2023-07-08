@@ -12,8 +12,10 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:autoSizeTextType="uniform"
-        android:text="@string/sign_up"
+        android:clickable="true"
+        android:focusable="true"
         android:fontFamily="@font/montserrat_bold"
+        android:text="@string/sign_up"
         android:textAlignment="center"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@id/guideline_h25"
@@ -28,6 +30,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:clickable="true"
+        android:focusable="true"
         android:scaleType="fitCenter"
         android:src="@drawable/box_not_checked"
         app:layout_constraintBottom_toBottomOf="@id/guideline_h25"
@@ -35,44 +38,45 @@
         app:layout_constraintHeight_percent="0.1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/guideline_h25"
-        app:layout_constraintWidth_percent="0.3"
-        android:focusable="true" />
+        app:layout_constraintWidth_percent="0.3" />
 
     <ImageView
         android:id="@+id/box2"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:scaleType="fitCenter"
         android:clickable="true"
+        android:focusable="true"
+        android:scaleType="fitCenter"
         android:src="@drawable/box_not_checked"
         app:layout_constraintBottom_toBottomOf="@id/guideline_h61"
         app:layout_constraintEnd_toEndOf="@id/guideline_v35"
         app:layout_constraintHeight_percent="0.1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/guideline_h25"
-        app:layout_constraintWidth_percent="0.3"
-        android:focusable="true" />
+        app:layout_constraintWidth_percent="0.3" />
 
     <ImageView
         android:id="@+id/box3"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:scaleType="fitCenter"
         android:clickable="true"
+        android:focusable="true"
+        android:scaleType="fitCenter"
         android:src="@drawable/box_checked"
         app:layout_constraintBottom_toBottomOf="@id/guideline_h61"
         app:layout_constraintEnd_toEndOf="@id/guideline_v35"
         app:layout_constraintHeight_percent="0.1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/guideline_h61"
-        app:layout_constraintWidth_percent="0.3"
-        android:focusable="true" />
+        app:layout_constraintWidth_percent="0.3" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/text_phone"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:autoSizeTextType="uniform"
+        android:clickable="true"
+        android:focusable="true"
         android:fontFamily="@font/montserrat_bold"
         android:text="@string/phone"
         android:textAlignment="viewStart"
@@ -91,6 +95,8 @@
         android:autoSizeTextType="uniform"
         android:fontFamily="@font/montserrat_bold"
         android:text="@string/email"
+        android:clickable="true"
+        android:focusable="true"
         android:textAlignment="viewStart"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@id/guideline_h61"
@@ -120,9 +126,9 @@
         android:id="@+id/button_play"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:scaleType="fitCenter"
         android:clickable="true"
         android:focusable="true"
+        android:scaleType="fitCenter"
         android:src="@drawable/text_field_pink"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -137,16 +143,15 @@
         android:layout_height="0dp"
         android:autoSizeTextType="uniform"
         android:fontFamily="@font/montserrat_bold"
-        android:text="@string/play"
         android:gravity="center"
+        android:text="@string/play"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.13"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/guideline_h61"
-        app:layout_constraintWidth_percent="0.45"
-        />
+        app:layout_constraintWidth_percent="0.45" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_h25"

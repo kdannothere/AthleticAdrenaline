@@ -2,6 +2,10 @@ package com.adrenaline.ofathlet.presentation.utilities
 
 import android.content.Context
 import android.media.MediaPlayer
+import android.os.Build
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.os.VibratorManager
 import com.adrenaline.ofathlet.R
 import com.adrenaline.ofathlet.data.DataManager
 import kotlinx.coroutines.CoroutineScope
@@ -18,7 +22,7 @@ object MusicUtility {
 
     fun playMusic(mediaPlayer: MediaPlayer, context: Context, scope: CoroutineScope) {
         scope.launch(Dispatchers.IO) {
-            val isMusicOn = async {  DataManager.loadMusicSetting(context) }
+            val isMusicOn = async { DataManager.loadMusicSetting(context) }
             if (!isMusicOn.await() || mediaPlayer.isPlaying) return@launch
             launch(Dispatchers.Main) {
                 mediaPlayer.isLooping = true
@@ -35,10 +39,17 @@ object MusicUtility {
         }
     }
 
-    fun playSound(mediaPlayer: MediaPlayer, rawResId: Int, context: Context, scope: CoroutineScope) {
+    fun playSound(
+        mediaPlayer: MediaPlayer,
+        rawResId: Int,
+        context: Context,
+        scope: CoroutineScope,
+        isSoundOn: Boolean,
+        isVibrateOn: Boolean
+    ) {
         scope.launch(Dispatchers.IO) {
-            val isSoundOn = async { DataManager.loadMusicSetting(context) }
-            if (!isSoundOn.await()) return@launch
+            if (rawResId == soundLoseResId || rawResId == soundWinResId) doVibrate(context, scope, isVibrateOn)
+            if (!isSoundOn) return@launch
             launch(Dispatchers.Main) Main@{
                 val assetFileDescriptor =
                     context.resources.openRawResourceFd(rawResId) ?: return@Main
@@ -50,6 +61,36 @@ object MusicUtility {
                 )
                 assetFileDescriptor.close()
                 mediaPlayer.prepareAsync()
+            }
+        }
+    }
+
+    fun doVibrate(context: Context, scope: CoroutineScope, isVibrateOn: Boolean) {
+        if (!isVibrateOn) return
+        scope.launch(Dispatchers.Main) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                val vibratorManager =
+                    context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+                val vibrator = vibratorManager.defaultVibrator
+                vibrator.vibrate(
+                    VibrationEffect.createOneShot(
+                        500,
+                        VibrationEffect.DEFAULT_AMPLITUDE
+                    )
+                )
+            } else {
+                val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    vibrator.vibrate(
+                        VibrationEffect.createOneShot(
+                            500,
+                            VibrationEffect.DEFAULT_AMPLITUDE
+                        )
+                    )
+                } else {
+                    @Suppress("DEPRECATION")
+                    vibrator.vibrate(500)
+                }
             }
         }
     }

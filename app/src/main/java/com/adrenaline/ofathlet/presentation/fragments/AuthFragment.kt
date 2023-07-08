@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.adrenaline.ofathlet.BestActivity
 import com.adrenaline.ofathlet.R
@@ -39,6 +39,10 @@ class AuthFragment : Fragment() {
             updateBoxes()
         }
 
+        binding.textPhone.setOnClickListener {
+            binding.box1.callOnClick()
+        }
+
         binding.box2.setOnClickListener {
             playClickSound()
             viewModel.apply {
@@ -49,6 +53,10 @@ class AuthFragment : Fragment() {
             updateBoxes()
         }
 
+        binding.textEmail.setOnClickListener {
+            binding.box2.callOnClick()
+        }
+
         binding.box3.setOnClickListener {
             playClickSound()
             viewModel.apply {
@@ -57,6 +65,10 @@ class AuthFragment : Fragment() {
                 isUserAnonymous = true
             }
             updateBoxes()
+        }
+
+        binding.textAnonymous.setOnClickListener {
+            binding.box3.callOnClick()
         }
 
         binding.buttonPlay.setOnClickListener {
@@ -110,7 +122,9 @@ class AuthFragment : Fragment() {
             mediaPlayer = (activity as BestActivity).soundPlayer,
             MusicUtility.soundClickResId,
             requireContext(),
-            lifecycleScope
+            viewModel.viewModelScope,
+            viewModel.isSoundOn,
+            viewModel.isVibrationOn
         )
     }
 }

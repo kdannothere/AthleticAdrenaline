@@ -10,7 +10,7 @@ import android.view.inputmethod.EditorInfo
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.adrenaline.ofathlet.BestActivity
 import com.adrenaline.ofathlet.R
@@ -64,7 +64,10 @@ class AuthPhoneFragment : Fragment() {
     private fun signIn(phone: String = binding.loginValue.text.toString()) {
         val countryCode = binding.countryPicker.selectedCountryCode
         val isPhoneNumber = Patterns.PHONE.matcher(countryCode + phone).matches()
-        if (!isPhoneNumber) return
+        if (!isPhoneNumber) {
+            MusicUtility.doVibrate(requireContext(), viewModel.viewModelScope, viewModel.isVibrationOn)
+            return
+        }
         viewModel.signIn(requireContext(), phone)
         binding.buttonPlay.callOnClick()
     }
@@ -74,7 +77,9 @@ class AuthPhoneFragment : Fragment() {
             mediaPlayer = (activity as BestActivity).soundPlayer,
             MusicUtility.soundClickResId,
             requireContext(),
-            lifecycleScope
+            viewModel.viewModelScope,
+            viewModel.isSoundOn,
+            viewModel.isVibrationOn
         )
     }
 }
