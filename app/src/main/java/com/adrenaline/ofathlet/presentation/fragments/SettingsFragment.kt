@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.adrenaline.ofathlet.BestActivity
@@ -108,6 +109,7 @@ class SettingsFragment : Fragment() {
             } else {
                 DataManager.saveSoundSetting(requireContext(), true)
                 viewModel.isSoundOn = true
+                playClickSound()
             }
             setupSettings()
         }
@@ -121,6 +123,7 @@ class SettingsFragment : Fragment() {
             } else {
                 DataManager.saveVibrationSetting(requireContext(), true)
                 viewModel.isVibrationOn = true
+                MusicUtility.doVibrate(requireContext(), lifecycleScope, viewModel.isVibrationOn)
             }
             setupSettings()
         }
