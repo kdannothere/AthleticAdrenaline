@@ -9,17 +9,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.adrenaline.ofathlet.BestActivity
 import com.adrenaline.ofathlet.data.DataManager
 import com.adrenaline.ofathlet.databinding.FragmentGameBonusBinding
 import com.adrenaline.ofathlet.presentation.GameViewModel
-import com.adrenaline.ofathlet.presentation.slot.SlotAdapter
 import com.adrenaline.ofathlet.presentation.utilities.MusicUtility
 import com.adrenaline.ofathlet.presentation.utilities.ViewUtility
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -29,9 +25,6 @@ class GameBonusFragment : Fragment() {
     private var _binding: FragmentGameBonusBinding? = null
     private val binding get() = _binding!!
     private val viewModel: GameViewModel by activityViewModels()
-    private lateinit var leftSlotAdapter: SlotAdapter
-    private lateinit var centerSlotAdapter: SlotAdapter
-    private lateinit var rightSlotAdapter: SlotAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,40 +32,8 @@ class GameBonusFragment : Fragment() {
     ): View {
         _binding = FragmentGameBonusBinding.inflate(inflater, container, false)
 
-        ViewUtility.updateFieldHeight(
-            binding.slotField,
-            viewModel.isHeightCorrect
-        ) { viewModel.setIsHeightCorrect(true) }
+        setClickListeners()
 
-        viewModel.apply {
-            if (leftSlots.isEmpty()) generateSlots()
-            binding.totalValue.text = balance.value.toString()
-            binding.betValue.text = bet.value.toString()
-        }
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-            // fixing auto text feature for older Android APIs
-            ViewUtility.apply {
-                makeTextAutoSize(binding.totalTitle)
-                makeTextAutoSize(binding.winTitle)
-                makeTextAutoSize(binding.winValue)
-                makeTextAutoSize(binding.totalValue)
-                makeTextAutoSize(binding.betValue)
-            }
-        }
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        lifecycleScope.launch(Dispatchers.Default) {
-            while (!viewModel.isHeightCorrect.value) {
-                delay(100L)
-            }
-            launch(Dispatchers.Main) {
-                setRecyclerViews()
-                setClickListeners()
-            }
-        }
         viewModel.balance.onEach { newValue ->
             binding.totalValue.text = newValue.toString()
         }.launchIn(lifecycleScope)
@@ -98,47 +59,19 @@ class GameBonusFragment : Fragment() {
                 viewModel.setIsPlayingSoundLose(false)
             }
         }.launchIn(lifecycleScope)
-    }
 
-    private fun setRecyclerViews() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            // fixing auto text feature for older Android APIs
+            ViewUtility.apply {
+                makeTextAutoSize(binding.totalTitle)
+                makeTextAutoSize(binding.winTitle)
+                makeTextAutoSize(binding.winValue)
+                makeTextAutoSize(binding.totalValue)
+                makeTextAutoSize(binding.betValue)
+            }
+        }
 
-        leftSlotAdapter = SlotAdapter(viewModel.leftSlots)
-        centerSlotAdapter = SlotAdapter(viewModel.centerSlots)
-        rightSlotAdapter = SlotAdapter(viewModel.rightSlots)
-        binding.leftRecyclerView.apply {
-            adapter = leftSlotAdapter
-            layoutManager = LinearLayoutManager(requireContext())
-            setOnTouchListener { _, _ -> true }
-        }
-        binding.centerRecyclerView.apply {
-            adapter = centerSlotAdapter
-            layoutManager = LinearLayoutManager(requireContext())
-            setOnTouchListener { _, _ -> true }
-        }
-        binding.rightRecyclerView.apply {
-            adapter = rightSlotAdapter
-            layoutManager = LinearLayoutManager(requireContext())
-            setOnTouchListener { _, _ -> true }
-        }
-        setCorrectRecyclerViewHeight(
-            listOf(
-                binding.leftRecyclerView,
-                binding.centerRecyclerView,
-                binding.rightRecyclerView
-            )
-        )
-    }
-
-    private fun setCorrectRecyclerViewHeight(recyclers: List<RecyclerView?>) {
-        val params = listOf(
-            recyclers[0]?.layoutParams,
-            recyclers[1]?.layoutParams,
-            recyclers[2]?.layoutParams
-        )
-        repeat(3) { index ->
-            params[index]?.height = (ViewUtility.getFieldHeight() * 0.8).toInt()
-            recyclers[index]?.layoutParams = params[index]
-        }
+        return binding.root
     }
 
     private fun setClickListeners() {
@@ -147,14 +80,7 @@ class GameBonusFragment : Fragment() {
 
             buttonRepeat.setOnClickListener {
                 playClickSound()
-                viewModel.spinSlots(
-                    listOf(
-                        leftRecyclerView,
-                        centerRecyclerView,
-                        rightRecyclerView
-                    ),
-                    requireContext()
-                )
+                viewModel.spinWheel(binding.wheel, requireContext())
             }
 
             buttonIncreaseBet.setOnClickListener {
@@ -179,18 +105,6 @@ class GameBonusFragment : Fragment() {
                 }
             }
         }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        lifecycleScope.launch(Dispatchers.Main) {
-            viewModel.setIsHeightCorrect(false)
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
     }
 
     private fun playClickSound() {

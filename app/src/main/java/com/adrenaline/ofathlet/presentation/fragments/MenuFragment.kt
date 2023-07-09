@@ -35,14 +35,14 @@ class MenuFragment : Fragment() {
             findNavController().navigateUp()
         }
 
-        binding.buttonGameWheel.setOnClickListener {
+        binding.buttonGame1.setOnClickListener {
             playClickSound()
-            findNavController().navigate(R.id.action_MenuFragment_to_GameWheelFragment)
+            findNavController().navigate(R.id.action_MenuFragment_to_Game1Fragment)
         }
 
-        binding.buttonGameSlot.setOnClickListener {
+        binding.buttonGame2.setOnClickListener {
             playClickSound()
-            findNavController().navigate(R.id.action_MenuFragment_to_GameSlotFragment)
+            findNavController().navigate(R.id.action_MenuFragment_to_Game2Fragment)
         }
 
         binding.buttonGameBonus.setOnClickListener {
@@ -64,8 +64,8 @@ class MenuFragment : Fragment() {
             // fix for auto text feature for older Android APIs
             ViewUtility.apply {
                 makeTextAutoSize(binding.linkPrivacy)
-                makeTextAutoSize(binding.titleGameWheel)
-                makeTextAutoSize(binding.titleGameSlot)
+                makeTextAutoSize(binding.titleGame1)
+                makeTextAutoSize(binding.titleGame2)
                 makeTextAutoSize(binding.titleGameBonus)
             }
         }

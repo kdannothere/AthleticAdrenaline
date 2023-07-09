@@ -71,13 +71,13 @@
 
         <action
             app:popUpTo="@id/fragment_menu"
-            android:id="@+id/action_MenuFragment_to_GameWheelFragment"
-            app:destination="@id/fragment_game_wheel" />
+            android:id="@+id/action_MenuFragment_to_Game1Fragment"
+            app:destination="@id/fragment_game_1" />
 
         <action
             app:popUpTo="@id/fragment_menu"
-            android:id="@+id/action_MenuFragment_to_GameSlotFragment"
-            app:destination="@id/fragment_game_slot" />
+            android:id="@+id/action_MenuFragment_to_Game2Fragment"
+            app:destination="@id/fragment_game_2" />
 
         <action
             app:popUpTo="@id/fragment_menu"
@@ -97,15 +97,15 @@
     </fragment>
 
     <fragment
-        android:id="@+id/fragment_game_wheel"
-        android:name="com.adrenaline.ofathlet.presentation.fragments.GameWheelFragment"
-        tools:layout="@layout/fragment_game_wheel">
+        android:id="@+id/fragment_game_1"
+        android:name="com.adrenaline.ofathlet.presentation.fragments.GameSlotFragment"
+        tools:layout="@layout/fragment_game_slot">
     </fragment>
 
     <fragment
-        android:id="@+id/fragment_game_slot"
-        android:name="com.adrenaline.ofathlet.presentation.fragments.GameSlotFragment"
-        tools:layout="@layout/fragment_game_slot">
+        android:id="@+id/fragment_game_2"
+        android:name="com.adrenaline.ofathlet.presentation.fragments.GameSlot2Fragment"
+        tools:layout="@layout/fragment_game_slot_2">
     </fragment>
 
     <fragment
